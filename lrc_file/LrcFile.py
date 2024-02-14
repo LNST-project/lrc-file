@@ -308,14 +308,14 @@ class LrcFile:
         evaluation_data = {}
 
         for result in self.evaluation_results:
-            for comparison in result.data["comparisons"]:
-                if not isinstance(comparison["current_result"], result_type):
+            for comparison in result.comparisons:
+                if not isinstance(comparison.current_result, result_type):
                     continue
 
-                evaluated_metric = comparison["metric_name"]
+                evaluated_metric = comparison.metric_name
                 evaluated_metric_name = re.sub("^[0-9]+_", "", evaluated_metric)
                 evaluation_data[evaluated_metric] = getattr(
-                    comparison["current_result"], evaluated_metric_name
+                    comparison.current_result, evaluated_metric_name
                 ).average
 
         return evaluation_data
